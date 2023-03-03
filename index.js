@@ -21,7 +21,7 @@ const fs = require('fs');
 const fileUrl = 'https://media.discordapp.net/attachments/1060751573002768464/1081208773877706812/f7d5da50-7e74-4cfd-ada4-0f313f43c4b8.jpg?width=350&height=350';
 const fileName = '0f313f43c4b8.jpg';
 
-const file = fs.createWriteStream(fileName);
+const file = fs.createWriteStream(`uploads/${fileName}`);
 
 https.get(fileUrl, function (response) {
     const totalBytes = parseInt(response.headers['content-length'], 10);
