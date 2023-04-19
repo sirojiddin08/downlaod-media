@@ -1,5 +1,4 @@
 const puppeteer = require('puppeteer');
-const { ElementHandle } = require('puppeteer');
 
 (async () => {
   // Launch a headless browser
@@ -7,16 +6,18 @@ const { ElementHandle } = require('puppeteer');
   const page = await browser.newPage();
   await page.goto('https://mixdrop.co/f/zpwjpd9na0dk49');
 
-  await page.screenshot({ path: "example.png" });
-  console.log(element);
-
+  // await page.screenshot({ path: "example.png", fullPage: true });
+  // await page.pdf({ path: "example.pdf", format: "A4" });
+  // const html = await page.content();
 
   // Simulate a click on the important a element and wait for 3 seconds
-  await page.click('a.download-btn');
-  await page.waitForTimeout(3000);
+  const element = await page.$(".download-btn")
+  await page.evaluate(element => element.click(), element)
+  await page.waitForTimeout(5000);
 
-  // const hrefValue = await page.$eval('a.download-btn', a => a.href);
-  // console.log(hrefValue);
+  const text = await page.evaluate(element => element.innerHTML, element)
+  const href = await page.evaluate(element => element.href, element)
+  console.log(text, href);
 
 
   // The button has been clicked
